@@ -1,6 +1,7 @@
 <script lang="ts">
-  import Menu from "$lib/Menu.svelte";
+  import Header from "$lib/Header.svelte";
 </script>
-<h1>The Lab</h1>
 
-<Menu/>
+<Header/>
+
+<h1>The Lab</h1>
