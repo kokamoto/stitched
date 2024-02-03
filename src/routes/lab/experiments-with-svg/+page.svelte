@@ -1,13 +1,4 @@
-<script lang="ts">
-  import Header from "$lib/Header.svelte";
-
-  let fill = "red";
-</script>
-
-<Header/>
-
 <h1>The Lab: Experiments with SVG</h1>
-
 
 <label for="fill-color">Fill color:</label>
 <select bind:value={fill} id="fill-color">
