@@ -1,3 +1,8 @@
+<style>
+  .header {
+    height: 2.3rem;
+  }
+</style>
 <div class="header">
   <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
     <a class="pure-menu-heading" href="/">STITCHED</a>
@@ -9,3 +14,4 @@
   </div>
 </div>
 
+<slot></slot>
