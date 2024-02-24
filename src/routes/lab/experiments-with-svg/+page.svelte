@@ -1,3 +1,7 @@
+<script lang="ts">
+  let fill="blue";
+</script>
+
 <h1>The Lab: Experiments with SVG</h1>
 
 <label for="fill-color">Fill color:</label>
