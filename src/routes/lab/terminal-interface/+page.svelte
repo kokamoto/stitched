@@ -9,12 +9,28 @@
   .terminal div {
     line-height: 1.5rem;
   }
+  .terminal-input {
+    display: flex;
+  }
   .terminal-input input {
     width: 100%;
     padding: 0;
     margin: 0;
     border: none;
     outline: none;
+  }
+
+  .terminal-command::before {
+    content: '$ ';
+  }
+
+  .terminal-input::before {
+    content: '$ ';
+    width: 1rem;
+  }
+
+  .terminal-error {
+    color: darkred;
   }
 </style>
 
@@ -28,11 +44,13 @@
   ]
 
   function onCmdEnter(event: KeyboardEvent) {
-    if (event.key === 'Enter') {
-      if (event.target instanceof HTMLInputElement) {
+    if (event.key === 'Enter' && event.target instanceof HTMLInputElement) {
+      if (event.target.value === 'clear') {
+        commands = [];
+      } else {
         commands = [...commands, event.target.value]
-        cmd = "";
       }
+      cmd = "";
     }
   }
 
@@ -42,7 +60,7 @@
 
 <div class="terminal">
   <div class="terminal-output">
-    <span>This is a terminal!</span>
+    <span><strong>This is a terminal!</strong></span>
   </div>
   <div class="terminal-command">
     <span>foobar</span>
