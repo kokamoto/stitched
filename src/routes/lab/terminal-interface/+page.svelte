@@ -35,22 +35,49 @@
 </style>
 
 <script lang="ts">
+
+  enum TerminalLineType {
+    Command = 'terminal-command',
+    Output = 'terminal-output',
+    Error = 'terminal-error'
+  };
+
+  type TerminalLine = {
+    text: String,
+    type: TerminalLineType
+  };
+
   let cmd = "";
 
-  let commands: string[] = [
-    "This is a terminal",
-    "Foobar",
-    "help"
-  ]
+  let history: string[] = [
+    "foobar"
+  ];
+  let historyIndex = history.length - 1;
+
+  let terminalLines: TerminalLine[] = [{
+    text: 'This is a terminal',
+    type: TerminalLineType.Output
+  }, {
+    text: 'foobar',
+    type: TerminalLineType.Command
+  }, {
+    text: 'Not a valid command: foobar',
+    type: TerminalLineType.Error
+  }];
 
   function onCmdEnter(event: KeyboardEvent) {
     if (event.key === 'Enter' && event.target instanceof HTMLInputElement) {
       if (event.target.value === 'clear') {
-        commands = [];
+        terminalLines = [];
       } else {
-        commands = [...commands, event.target.value]
+        terminalLines = [...terminalLines, {
+          type: TerminalLineType.Command,
+          text: event.target.value
+        }];
+        history = [...history, event.target.value];
       }
       cmd = "";
+      historyIndex = history.length - 1;
     }
   }
 
@@ -59,18 +86,9 @@
 <h1>Lab: Terminal Interface</h1>
 
 <div class="terminal">
-  <div class="terminal-output">
-    <span><strong>This is a terminal!</strong></span>
-  </div>
-  <div class="terminal-command">
-    <span>foobar</span>
-  </div>
-  <div class="terminal-error">
-    <span>'foobar' not a valid command</span>
-  </div>
-  {#each commands as command}
-  <div class="terminal-command">
-    <span>{command}</span>
+  {#each terminalLines as terminalLine}
+  <div class="{terminalLine.type}">
+    <span>{terminalLine.text}</span>
   </div>
   {/each}
   <div class="terminal-input">
