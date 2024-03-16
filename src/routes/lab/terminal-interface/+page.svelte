@@ -36,16 +36,7 @@
 
 <script lang="ts">
 
-  enum TerminalLineType {
-    Command = 'terminal-command',
-    Output = 'terminal-output',
-    Error = 'terminal-error'
-  };
-
-  type TerminalLine = {
-    text: String,
-    type: TerminalLineType
-  };
+  import { type TerminalLine, TerminalLineType } from "$lib/terminal/types";
 
   let cmd = "";
 
