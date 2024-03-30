@@ -2,6 +2,10 @@
   .header {
     height: 2.3rem;
   }
+  .page {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
 </style>
 <div class="header">
   <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
@@ -14,4 +18,6 @@
   </div>
 </div>
 
-<slot></slot>
+<div class="page">
+  <slot></slot>
+</div>
