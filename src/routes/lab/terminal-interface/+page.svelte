@@ -1,3 +1,59 @@
+<script lang="ts">
+  import { type TerminalLine, TerminalLineType } from '$lib/terminal/types';
+
+  let cmd = '';
+
+  let history: string[] = ['foobar'];
+  let historyIndex = history.length - 1;
+
+  let terminalLines: TerminalLine[] = [
+    {
+      text: 'This is a terminal',
+      type: TerminalLineType.Output
+    },
+    {
+      text: 'foobar',
+      type: TerminalLineType.Command
+    },
+    {
+      text: 'Not a valid command: foobar',
+      type: TerminalLineType.Error
+    }
+  ];
+
+  function onCmdEnter(event: KeyboardEvent) {
+    if (event.key === 'Enter' && event.target instanceof HTMLInputElement) {
+      if (event.target.value === 'clear') {
+        terminalLines = [];
+      } else {
+        terminalLines = [
+          ...terminalLines,
+          {
+            type: TerminalLineType.Command,
+            text: event.target.value
+          }
+        ];
+        history = [...history, event.target.value];
+      }
+      cmd = '';
+      historyIndex = history.length - 1;
+    }
+  }
+</script>
+
+<h1>Lab: Terminal Interface</h1>
+
+<div class="terminal">
+  {#each terminalLines as terminalLine}
+    <div class={terminalLine.type}>
+      <span>{terminalLine.text}</span>
+    </div>
+  {/each}
+  <div class="terminal-input">
+    <input bind:value={cmd} on:keydown={onCmdEnter} />
+  </div>
+</div>
+
 <style>
   .terminal {
     font-family: monospace;
@@ -33,56 +89,3 @@
     color: darkred;
   }
 </style>
-
-<script lang="ts">
-
-  import { type TerminalLine, TerminalLineType } from "$lib/terminal/types";
-
-  let cmd = "";
-
-  let history: string[] = [
-    "foobar"
-  ];
-  let historyIndex = history.length - 1;
-
-  let terminalLines: TerminalLine[] = [{
-    text: 'This is a terminal',
-    type: TerminalLineType.Output
-  }, {
-    text: 'foobar',
-    type: TerminalLineType.Command
-  }, {
-    text: 'Not a valid command: foobar',
-    type: TerminalLineType.Error
-  }];
-
-  function onCmdEnter(event: KeyboardEvent) {
-    if (event.key === 'Enter' && event.target instanceof HTMLInputElement) {
-      if (event.target.value === 'clear') {
-        terminalLines = [];
-      } else {
-        terminalLines = [...terminalLines, {
-          type: TerminalLineType.Command,
-          text: event.target.value
-        }];
-        history = [...history, event.target.value];
-      }
-      cmd = "";
-      historyIndex = history.length - 1;
-    }
-  }
-
-</script>
-
-<h1>Lab: Terminal Interface</h1>
-
-<div class="terminal">
-  {#each terminalLines as terminalLine}
-  <div class="{terminalLine.type}">
-    <span>{terminalLine.text}</span>
-  </div>
-  {/each}
-  <div class="terminal-input">
-    <input bind:value={cmd} on:keydown={onCmdEnter}/>
-  </div>
-</div>
